@@ -27,3 +27,16 @@ const electronHandler = {
 contextBridge.exposeInMainWorld('electron', electronHandler);
 
 export type ElectronHandler = typeof electronHandler;
+
+(window as any).togglePesticide = () => {
+  const existingStyle = document.getElementById("pesticide-style");
+  if (existingStyle) {
+    existingStyle.remove();
+  } else {
+    const style = document.createElement("link");
+    style.rel = "stylesheet";
+    style.href = "https://cdn.jsdelivr.net/gh/mrmrs/pesticide/pesticide.css";
+    style.id = "pesticide-style";
+    document.head.appendChild(style);
+  }
+};

@@ -5,24 +5,27 @@
 
 @import 'tailwindcss';
 @import './font.css';
+@import './cutom.css';
 
 body {
   position: relative;
   color: white;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
   font-family: sans-serif;
   overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 100vw;
+
+  /* image bg */
+  background-image: url('/public/img/bg.png');
+  background-size: contain;
+  background-position: left;
+  background-repeat: repeat;
 }
 
 body {
    font-family: 'Inter', sans-serif;
+}
+
+#root {
+  height: 100%;
 }
