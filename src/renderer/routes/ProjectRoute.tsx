@@ -7,7 +7,9 @@ const ProjectRouteWrapper = styled.div``;
 function ProjectRoute(props: Props) {
   return (
     <ProjectRouteWrapper>
-      <div className=""></div>
+      <div className="text-5xl">
+        Test XXX ABC 12345
+      </div>
     </ProjectRouteWrapper>
   );
 }

@@ -3,7 +3,8 @@
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
 
-@import "tailwindcss";
+@import 'tailwindcss';
+@import './font.css';
 
 body {
   position: relative;
@@ -20,4 +21,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+body {
+   font-family: 'Inter', sans-serif;
 }
