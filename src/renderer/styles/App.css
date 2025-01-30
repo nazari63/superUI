@@ -6,6 +6,7 @@
 @import 'tailwindcss';
 @import './font.css';
 @import './cutom.css';
+@import './tailwind.css';
 
 body {
   position: relative;
@@ -13,6 +14,7 @@ body {
   height: 100vh;
   font-family: sans-serif;
   overflow-y: hidden;
+  overflow-x: hidden;
   width: 100vw;
 
   /* image bg */
@@ -23,7 +25,7 @@ body {
 }
 
 body {
-   font-family: 'Inter', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
 #root {

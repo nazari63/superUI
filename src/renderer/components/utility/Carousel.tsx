@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { Icon } from '@iconify/react';
 
 interface Props extends SimpleComponent {
   items: React.ReactNode[];
+  auto?: boolean;
 }
 
 function Carousel(props: Props) {
@@ -22,6 +23,19 @@ function Carousel(props: Props) {
   const nextSlide = () => {
     setIndex(index === length - 1 ? 0 : index + 1);
   };
+
+  let interval: any;
+
+  useEffect(() => {
+    if (props.auto) {
+      interval = setInterval(() => {
+        setIndex(index === length - 1 ? 0 : index + 1);
+      }, 3000);
+    }
+
+    return () => clearInterval(interval);
+  }, [index]);
+
   return (
     <div className="flex flex-col relative">
       <div className="relative w-full max-w-2xl mx-auto overflow-hidden rounded-xl">

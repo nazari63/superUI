@@ -1,5 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ButtonStyled from '../components/utility/ButtonStyled';
+import { Icon } from '@iconify/react';
+import { useState } from 'react';
+import SerchBox from '../components/utility/SerchBox';
+import Projectitem from '../components/project/Projectitem';
 
 interface Props extends SimpleComponent {}
 
@@ -7,10 +12,30 @@ const ProjectRouteWrapper = styled.div``;
 
 function ProjectRoute(props: Props) {
   const navigate = useNavigate();
+  const [search, setSearch] = useState('');
+
+  const handleChange = (e: any) => {
+    setSearch(e.target.value);
+  };
   return (
-    <ProjectRouteWrapper>
-      <div className="text-5xl text-sky-500">
-        <Link to="/dashboard/account">Go to Dashboard</Link>
+    <ProjectRouteWrapper className="w-full flex flex-col gap-3">
+      <div className="flex justify-between items-center">
+        <h2 className="text-black font-semibold text-2xl">All Project (2)</h2>
+        <ButtonStyled onClick={() => navigate('/project/create')}>
+          <div className="flex items-center gap-2">
+            <Icon icon={'ei:plus'} className="text-2xl" />
+            Create Project
+          </div>
+        </ButtonStyled>
+      </div>
+      <p className="text-gray-600">Recent Projects</p>
+      <SerchBox value={search} onChange={handleChange} />
+      <div className="flex flex-col gap-2 w-full max-h-[50vh] overflow-scroll">
+        <Projectitem />
+        <Projectitem />
+        <Projectitem />
+        <Projectitem />
+        <Projectitem />
       </div>
     </ProjectRouteWrapper>
   );
