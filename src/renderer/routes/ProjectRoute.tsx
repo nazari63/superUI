@@ -21,7 +21,7 @@ function ProjectRoute(props: Props) {
     <ProjectRouteWrapper className="w-full flex flex-col gap-3">
       <div className="flex justify-between items-center">
         <h2 className="text-black font-semibold text-2xl">All Project (2)</h2>
-        <ButtonStyled onClick={() => navigate('/project/create')}>
+        <ButtonStyled onClick={() => navigate('/dashboard/account')}>
           <div className="flex items-center gap-2">
             <Icon icon={'ei:plus'} className="text-2xl" />
             Create Project
@@ -31,11 +31,20 @@ function ProjectRoute(props: Props) {
       <p className="text-gray-600">Recent Projects</p>
       <SerchBox value={search} onChange={handleChange} />
       <div className="flex flex-col gap-2 w-full max-h-[50vh] overflow-scroll">
-        <Projectitem />
-        <Projectitem />
-        <Projectitem />
-        <Projectitem />
-        <Projectitem />
+        <Projectitem
+          name='Nerd3Lab'
+          description='deploying blockchain applications.'
+          l2ChainList={['base', 'eth', 'local', 'mode', 'op', 'zora']}
+          l1ChainList={['eth']}
+          status={'active'}
+        />
+        <Projectitem
+          name='ETH lab'
+          description='when eth up'
+          l2ChainList={['eth', 'op', 'zora']}
+          l1ChainList={['eth']}
+          status={'inactive'}
+        />
       </div>
     </ProjectRouteWrapper>
   );

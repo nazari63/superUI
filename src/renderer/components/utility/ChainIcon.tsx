@@ -15,8 +15,10 @@ const IconsDict = {
   zora: ZoraIMG,
 };
 
+export type ChainListIcon = keyof typeof IconsDict;
+
 interface Props extends SimpleComponent {
-  chain: 'base' | 'eth' | 'local' | 'mode' | 'op' | 'zora';
+  chain: ChainListIcon;
   size?: 'md' | 'lg' | 'xl';
 }
 

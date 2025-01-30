@@ -1,9 +1,15 @@
 import styled from 'styled-components';
-import ChainIcon from '../utility/ChainIcon';
+import ChainIcon, { ChainListIcon } from '../utility/ChainIcon';
 import { StatusBadge } from '../utility/StatusBadge';
 import { Icon } from '@iconify/react';
 
-interface Props extends SimpleComponent {}
+interface Props extends SimpleComponent {
+  name: string;
+  description: string;
+  status: 'active' | 'inactive';
+  l2ChainList: ChainListIcon[];
+  l1ChainList: ChainListIcon[];
+}
 
 const ProjectitemWrapper = styled.div`
   transition: all 0.3s;
@@ -14,8 +20,8 @@ const ProjectitemWrapper = styled.div`
 `;
 
 function Projectitem(props: Props) {
-  const l2ChainList = ['eth', 'local', 'mode', 'op', 'zora'];
-  const l1ChainList = ['eth'];
+  const l2ChainList = props.l2ChainList;
+  const l1ChainList = props.l1ChainList;
   return (
     <ProjectitemWrapper
       className="w-full cursor-pointer rounded-xl flex flex-col
@@ -24,13 +30,13 @@ function Projectitem(props: Props) {
       <div className="flex items-start justify-between gap-4">
         <ChainIcon chain="local" size="lg" />
         <div className="flex-1">
-          <h3 className="text-gray-900 font-semibold text-lg">Project Name</h3>
+          <h3 className="text-gray-900 font-semibold text-lg">{props.name}</h3>
           <p className="text-red-700 font-semibold text-sm">
-            Project Description
+            {props.description}
           </p>
         </div>
         <div className="flex items-center">
-          <StatusBadge status={'active'} />
+          <StatusBadge status={props.status} />
         </div>
       </div>
       <div className="flex w-full items-center justify-between">
