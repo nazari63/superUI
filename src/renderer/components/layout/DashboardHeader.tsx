@@ -3,6 +3,7 @@ import ChainIcon from '../utility/ChainIcon';
 import { useState } from 'react';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
+import SerchBox from '../utility/SerchBox';
 
 interface Props extends SimpleComponent {}
 
@@ -48,6 +49,7 @@ const HeaderMenuList = [
 
 function DashboardHeader(props: Props) {
   const [select, setSelectMenu] = useState('Dashboard');
+  const [search, setSearch] = useState('');
   return (
     <DashboardHeaderWrapper className="w-full bg-white py-5 px-6 border-b-1 border-gray-200">
       <div className="flex flex-wrap w-ful gap-12">
@@ -73,6 +75,12 @@ function DashboardHeader(props: Props) {
           <p className="text-gray-600 mb-1 text-sm">RPC Server</p>
           <b className="text-black">Http://127.0.0.1:33333</b>
         </div>
+        <div className='w-[20rem] ml-auto'>
+          <SerchBox
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="flex w-full mt-4 justify-start">
@@ -84,9 +92,7 @@ function DashboardHeader(props: Props) {
               onClick={() => setSelectMenu(menu.title)}
             >
               <Icon icon={menu.icon} />
-              <p className="text-base font-semibold">
-                {menu.title}
-              </p>
+              <p className="text-base font-semibold">{menu.title}</p>
             </div>
           </Link>
         ))}
