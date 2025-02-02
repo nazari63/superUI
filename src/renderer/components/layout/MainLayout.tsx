@@ -22,7 +22,7 @@ function MainLayout(props: Props) {
           © Nerd3Lab 2025
         </p>
         <p className="flex items-center bg-white absolute bottom-6 right-6 text-gray-600 text-sm">
-          <Icon icon="akar-icons:email" className="text-red-500 text-lg mr-2" />
+          <Icon icon="akar-icons:email" className="text-brand-500 text-lg mr-2" />
           help@untitledui.com
         </p>
       </div>
@@ -34,15 +34,15 @@ function MainLayout(props: Props) {
             items={[
               <div className="text-5xl text-black font-semibold text-center">
                 Built on Ethereum,{' '}
-                <span className="text-red-500">built on the Superchain.</span>
+                <span className="text-brand-500">built on the Superchain.</span>
               </div>,
               <div className="text-5xl text-black font-semibold text-center">
                 NERD BUILD
-                <span className="text-red-500"> WEB3</span>
+                <span className="text-brand-500"> WEB3</span>
               </div>,
               <div className="text-5xl text-black font-semibold text-center">
                 Quickly fire up a personal{' '}
-                <span className="text-red-500">Superchain blockchain</span>
+                <span className="text-brand-500">Superchain blockchain</span>
               </div>,
             ]}
           />

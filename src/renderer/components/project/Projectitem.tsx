@@ -31,7 +31,7 @@ function Projectitem(props: Props) {
         <ChainIcon chain="local" size="lg" />
         <div className="flex-1">
           <h3 className="text-gray-900 font-semibold text-lg">{props.name}</h3>
-          <p className="text-red-700 font-semibold text-sm">
+          <p className="text-brand-700 font-semibold text-sm">
             {props.description}
           </p>
         </div>
@@ -47,8 +47,9 @@ function Projectitem(props: Props) {
                 style={{
                   transform: `translateX(${i * -5}px)`,
                 }}
+                key={`con-l2-${chain}`}
               >
-                <ChainIcon key={chain} chain={chain as any} size="md" />
+                <ChainIcon key={`l2-${chain}`} chain={chain as any} size="md" />
               </div>
             ))}
           </div>
@@ -62,7 +63,7 @@ function Projectitem(props: Props) {
             style={{ transform: `translateX(${l2ChainList.length * -5}px)` }}
           >
             {l1ChainList.map((chain) => (
-              <ChainIcon key={chain} chain={chain as any} size="md" />
+              <ChainIcon key={`l1-${chain}`} chain={chain as any} size="md" />
             ))}
           </div>
         </div>

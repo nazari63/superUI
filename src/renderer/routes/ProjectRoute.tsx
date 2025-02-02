@@ -38,13 +38,13 @@ function ProjectRoute(props: Props) {
           l1ChainList={['eth']}
           status={'active'}
         />
-        <Projectitem
+        {/* <Projectitem
           name='ETH lab'
           description='when eth up'
           l2ChainList={['eth', 'op', 'zora']}
           l1ChainList={['eth']}
           status={'inactive'}
-        />
+        /> */}
       </div>
     </ProjectRouteWrapper>
   );

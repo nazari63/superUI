@@ -10,3 +10,9 @@
     }
   }
 }
+
+.hovering {
+  -webkit-app-region: drag;
+}
+
+

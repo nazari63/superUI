@@ -25,8 +25,8 @@ interface Props extends SimpleComponent {
 const ChainIconWrapper = styled.div``;
 
 function ChainIcon(props: Props) {
-  const classname = `${props.size === 'md' ? 'w-6 h-6' : props.size === 'lg' ? 'w-10 h-10' : props.size === 'xl' ? 'w-32 h-32' : 'w-8 h-8'}
-  rounded-full bg-gray-200 flex items-center justify-center`;
+  const classname = `${props.size === 'md' ? 'w-6 h-6' : props.size === 'lg' ? 'w-10 h-10' : props.size === 'xl' ? 'w-32 h-32' : 'w-6 h-6'}
+  rounded-full flex items-center justify-center`;
   return (
     <ChainIconWrapper className={classname}>
       <img

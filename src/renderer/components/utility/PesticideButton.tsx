@@ -20,7 +20,7 @@ function App() {
   return (
     <button
       onClick={togglePesticide}
-      className="p-1 w-6 h-6 bg-red-500 text-white rounded text-sm"
+      className="p-1 w-6 h-6 bg-brand-500 text-white rounded text-sm"
     >
       🔨
     </button>

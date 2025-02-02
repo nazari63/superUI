@@ -22,6 +22,14 @@ body {
   background-size: contain;
   background-position: left;
   background-repeat: repeat;
+  background-color: #fff;
+
+  user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+* {
+  -webkit-app-region: no-drag; /* Allow hover interactions */
 }
 
 body {
