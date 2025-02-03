@@ -5,6 +5,7 @@ import LOCALIMG from '../../../../assets/img/crypto/local.svg';
 import MODEIMG from '../../../../assets/img/crypto/mode.svg';
 import OPIMG from '../../../../assets/img/crypto/op.svg';
 import ZoraIMG from '../../../../assets/img/crypto/zora.svg';
+import AccountIMG from '../../../../assets/img/crypto/account.svg';
 
 const IconsDict = {
   base: BaseIMG,
@@ -13,6 +14,7 @@ const IconsDict = {
   mode: MODEIMG,
   op: OPIMG,
   zora: ZoraIMG,
+  account: AccountIMG
 };
 
 export type ChainListIcon = keyof typeof IconsDict;
@@ -32,7 +34,7 @@ function ChainIcon(props: Props) {
       <img
         src={IconsDict[props.chain]}
         alt={props.chain}
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain rounded-full"
       />
     </ChainIconWrapper>
   );

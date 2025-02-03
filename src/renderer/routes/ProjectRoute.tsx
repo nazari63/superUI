@@ -21,7 +21,7 @@ function ProjectRoute(props: Props) {
     <ProjectRouteWrapper className="w-full flex flex-col gap-3">
       <div className="flex justify-between items-center">
         <h2 className="text-black font-semibold text-2xl">All Project (2)</h2>
-        <ButtonStyled onClick={() => navigate('/dashboard/account')}>
+        <ButtonStyled onClick={() => navigate('/dashboard/main')}>
           <div className="flex items-center gap-2">
             <Icon icon={'ei:plus'} className="text-2xl" />
             Create Project

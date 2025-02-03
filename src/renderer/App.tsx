@@ -6,6 +6,7 @@ import Layout from './components/layout/Layout';
 import DashboardAccountRoute from './routes/DashboardAccountRoute';
 import { Provider as ReduxToolkitProvider } from 'react-redux';
 import { store } from './states/store';
+import DashboardMain from './routes/DashboardMain';
 
 export default function App() {
   return (
@@ -14,6 +15,10 @@ export default function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<ProjectRoute />} />
+            <Route
+              path="/dashboard/main"
+              element={<DashboardMain />}
+            />
             <Route
               path="/dashboard/account"
               element={<DashboardAccountRoute />}

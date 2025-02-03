@@ -30,7 +30,6 @@ function Layout(props: Props) {
     scrollTo(0, 0);
   }, [route]);
 
-
   if (route.pathname.includes('dashboard')) {
     return (
       <LayoutWrapper className="w-full h-full relative">
