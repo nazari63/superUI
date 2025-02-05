@@ -1,10 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import ButtonStyled from '../components/utility/ButtonStyled';
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import SerchBox from '../components/utility/SerchBox';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import Projectitem from '../components/project/Projectitem';
+import ButtonStyled from '../components/utility/ButtonStyled';
+import SerchBox from '../components/utility/SearchBox';
 
 interface Props extends SimpleComponent {}
 
@@ -32,8 +32,8 @@ function ProjectRoute(props: Props) {
       <SerchBox value={search} onChange={handleChange} />
       <div className="flex flex-col gap-2 w-full max-h-[50vh] overflow-scroll">
         <Projectitem
-          name='Nerd3Lab'
-          description='deploying blockchain applications.'
+          name="Nerd3Lab"
+          description="deploying blockchain applications."
           l2ChainList={['base', 'eth', 'local', 'mode', 'op', 'zora']}
           l1ChainList={['eth']}
           status={'active'}

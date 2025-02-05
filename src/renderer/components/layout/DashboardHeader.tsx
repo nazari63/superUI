@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ChainIcon from '../utility/ChainIcon';
-import SerchBox from '../utility/SerchBox';
+import SerchBox from '../utility/SearchBox';
 
 interface Props extends SimpleComponent {}
 

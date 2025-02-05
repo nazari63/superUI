@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import Carousel from '../utility/Carousel';
-import DashboardSidebar from './DashboardSidebar';
 import DashboardHeader from './DashboardHeader';
+import DashboardSidebar from './DashboardSidebar';
 
 interface Props extends SimpleComponent {
   children: React.ReactNode;
@@ -15,7 +14,7 @@ function DashboardLayout(props: Props) {
       <DashboardSidebar />
       <div className="grow">
         <DashboardHeader />
-        <div className='p-4 h-full bg-white'>{props.children}</div>
+        <div className="py-5 px-6 h-full bg-white">{props.children}</div>
       </div>
     </DashboardLayoutWrapper>
   );
