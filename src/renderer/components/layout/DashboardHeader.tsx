@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ChainIcon from '../utility/ChainIcon';
 import SerchBox from '../utility/SerchBox';
@@ -13,12 +13,12 @@ const HeaderMenuList = [
   {
     title: 'Dashboard',
     icon: 'mdi:file-graph',
-    link: '/dashboard',
+    link: '/dashboard/main',
   },
   {
     title: 'Accounts',
     icon: 'flowbite:wallet-solid',
-    link: '/dashboard',
+    link: '/dashboard/account',
   },
   {
     title: 'Transactions',
@@ -50,6 +50,10 @@ const HeaderMenuList = [
 function DashboardHeader(props: Props) {
   const [select, setSelectMenu] = useState('Dashboard');
   const [search, setSearch] = useState('');
+  const location = useLocation();
+
+  console.log(location.pathname);
+
   return (
     <DashboardHeaderWrapper className="w-full bg-white py-5 px-6 border-b-1 border-gray-200">
       <div className="flex flex-wrap w-ful gap-12">
@@ -75,7 +79,7 @@ function DashboardHeader(props: Props) {
           <p className="text-gray-600 mb-1 text-sm">RPC Server</p>
           <b className="text-black">Http://127.0.0.1:33333</b>
         </div>
-        <div className="w-[20rem] ml-auto">
+        <div className="ml-auto">
           <SerchBox
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -85,7 +89,7 @@ function DashboardHeader(props: Props) {
 
       <div className="flex w-full mt-4 justify-start">
         {HeaderMenuList.map((menu) => (
-          <Link to={menu.link}>
+          <Link to={menu.link} key={`link-menu-head-${menu.title}`}>
             <div
               key={menu.title}
               className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded transition-all ${select !== menu.title ? 'text-gray-700 bg-white' : 'text-brand-500 bg-brand-25'}`}
