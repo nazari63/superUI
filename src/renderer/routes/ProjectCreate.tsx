@@ -149,7 +149,7 @@ function ProjectCreate(props: Props) {
             <div
               onClick={() => selectForkChainClick(chain as any)}
               key={`select-chain-${chain}`}
-              className={`project-item w-[8rem] border-1 rounded-xl p-3
+              className={`project-item w-[8rem] border-1 rounded-xl py-2
                 flex items-center p justify-center gap-2
                  text-black text-sm
                 font-semibold border-gray-300 transition-all
