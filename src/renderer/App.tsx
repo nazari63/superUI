@@ -1,14 +1,14 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import icon from '../../assets/icon.svg';
-import './styles/App.css';
-import ProjectRoute from './routes/ProjectRoute';
+import { Provider as ReduxToolkitProvider } from 'react-redux';
+import { Route, MemoryRouter as Router, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import DashboardAccountRoute from './routes/DashboardAccountRoute';
-import { Provider as ReduxToolkitProvider } from 'react-redux';
-import { store } from './states/store';
 import DashboardMain from './routes/DashboardMain';
 import Initialization from './Initialization';
 import ProjectCreate from './routes/ProjectCreate';
+import ProjectRoute from './routes/ProjectRoute';
+import DashboardTransactionsRoute from './routes/TransactionsRoute';
+import { store } from './states/store';
+import './styles/App.css';
 
 export default function App() {
   return (
@@ -26,9 +26,14 @@ export default function App() {
               path="/dashboard/main"
               element={<DashboardMain />}
             />
+            <Route path="/dashboard/main" element={<DashboardMain />} />
             <Route
               path="/dashboard/account"
               element={<DashboardAccountRoute />}
+            />
+            <Route
+              path="/dashboard/transactions"
+              element={<DashboardTransactionsRoute />}
             />
           </Routes>
         </Layout>

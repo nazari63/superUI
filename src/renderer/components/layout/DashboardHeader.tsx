@@ -1,9 +1,9 @@
+import { Icon } from '@iconify/react';
+import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ChainIcon from '../utility/ChainIcon';
-import { useState } from 'react';
-import { Icon } from '@iconify/react';
-import { Link, useLocation } from 'react-router-dom';
-import SerchBox from '../utility/SerchBox';
+import SerchBox from '../utility/SearchBox';
 
 interface Props extends SimpleComponent {}
 
@@ -23,7 +23,7 @@ const HeaderMenuList = [
   {
     title: 'Transactions',
     icon: 'icon-park-solid:transaction',
-    link: '/dashboard',
+    link: '/dashboard/transactions',
   },
   {
     title: 'Contracts',
@@ -79,7 +79,7 @@ function DashboardHeader(props: Props) {
           <p className="text-gray-600 mb-1 text-sm">RPC Server</p>
           <b className="text-black">Http://127.0.0.1:33333</b>
         </div>
-        <div className='ml-auto'>
+        <div className="ml-auto">
           <SerchBox
             value={search}
             onChange={(e) => setSearch(e.target.value)}

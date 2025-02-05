@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import cryptoIMG from '../../../../assets/img/cryptogroup.png';
 import cryptoIMGSVG from '../../../../assets/img/cryptogroup.svg';
 
 interface Props extends SimpleComponent {}
