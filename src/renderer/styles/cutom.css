@@ -15,4 +15,7 @@
   -webkit-app-region: drag;
 }
 
-
+.bg-radiant {
+  background-image: url('/assets/img/Gradient.png');
+  background-size: contain;
+}

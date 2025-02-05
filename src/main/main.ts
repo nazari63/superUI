@@ -17,6 +17,7 @@ import { resolveHtmlPath } from './util';
 import { installExtension, REDUX_DEVTOOLS } from 'electron-devtools-installer';
 import fs from 'fs';
 import os from 'node:os';
+import { IpcHandler } from './services/ipcHandler';
 
 class AppUpdater {
   constructor() {
@@ -28,6 +29,7 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
+// test
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
@@ -111,6 +113,9 @@ const createWindow = async () => {
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
   new AppUpdater();
+
+  // Initialize IPC Handler
+  new IpcHandler(mainWindow);
 };
 
 /**

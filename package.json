@@ -111,7 +111,8 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.16.0",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "viem": "^2.22.21"
   },
   "devDependencies": {
     "@electron/rebuild": "^3.3.0",

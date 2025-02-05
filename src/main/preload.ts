@@ -2,7 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example';
+export type Channels = 'ipc-example' | 'send-message';
 
 const electronHandler = {
   ipcRenderer: {
@@ -22,6 +22,10 @@ const electronHandler = {
       ipcRenderer.once(channel, (_event, ...args) => func(...args));
     },
   },
+  accounts: {
+    getAccounts: () => ipcRenderer.invoke('get-accounts'),
+    // updateAccount: (id: string, name: string) => ipcRenderer.invoke('update-account', id, name),
+  },
 };
 
 contextBridge.exposeInMainWorld('electron', electronHandler);
@@ -29,14 +33,14 @@ contextBridge.exposeInMainWorld('electron', electronHandler);
 export type ElectronHandler = typeof electronHandler;
 
 (window as any).togglePesticide = () => {
-  const existingStyle = document.getElementById("pesticide-style");
+  const existingStyle = document.getElementById('pesticide-style');
   if (existingStyle) {
     existingStyle.remove();
   } else {
-    const style = document.createElement("link");
-    style.rel = "stylesheet";
-    style.href = "https://cdn.jsdelivr.net/gh/mrmrs/pesticide/pesticide.css";
-    style.id = "pesticide-style";
+    const style = document.createElement('link');
+    style.rel = 'stylesheet';
+    style.href = 'https://cdn.jsdelivr.net/gh/mrmrs/pesticide/pesticide.css';
+    style.id = 'pesticide-style';
     document.head.appendChild(style);
   }
 };
