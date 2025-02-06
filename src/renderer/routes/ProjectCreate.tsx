@@ -47,7 +47,7 @@ function ProjectCreate(props: Props) {
   };
 
   const submit = () => {
-    navigate('/dashboard/main');
+    navigate('/loading');
   };
   return (
     <ProjectCreateWrapper className="w-full flex flex-col gap-3">

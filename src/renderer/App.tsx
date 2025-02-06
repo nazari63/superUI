@@ -9,6 +9,7 @@ import ProjectRoute from './routes/ProjectRoute';
 import DashboardTransactionsRoute from './routes/TransactionsRoute';
 import { store } from './states/store';
 import './styles/App.css';
+import ProjectLoading from './routes/ProjectLoading';
 
 export default function App() {
   return (
@@ -18,14 +19,9 @@ export default function App() {
         <Layout>
           <Routes>
             <Route path="/" element={<ProjectRoute />} />
-            <Route
-              path="/create"
-              element={<ProjectCreate />}
-            />
-            <Route
-              path="/dashboard/main"
-              element={<DashboardMain />}
-            />
+            <Route path="/create" element={<ProjectCreate />} />
+            <Route path="/loading" element={<ProjectLoading />} />
+            <Route path="/dashboard/main" element={<DashboardMain />} />
             <Route path="/dashboard/main" element={<DashboardMain />} />
             <Route
               path="/dashboard/account"
