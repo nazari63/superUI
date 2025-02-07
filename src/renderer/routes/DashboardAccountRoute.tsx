@@ -25,12 +25,25 @@ function DashboardAccountRoute(props: Props) {
     // Call get-accounts from main process
     const chain = chainState.chainConfing[chainId];
     const accounts = await window.electron.accounts.getAccounts(chain);
+    console.log(accounts);
     setAccounts(accounts);
   };
 
   useEffect(() => {
-    console.log('chainId', chainId);
-    getAccounts();
+    let isMounted = true;
+
+    const fetchAccounts = async () => {
+      while (isMounted) {
+        await getAccounts();
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+      }
+    };
+
+    fetchAccounts();
+
+    return () => {
+      isMounted = false;
+    };
   }, [chainId, layer]);
 
   const formatBalance = (balance: bigint) => {

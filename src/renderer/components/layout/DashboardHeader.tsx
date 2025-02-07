@@ -1,10 +1,12 @@
 import { Icon } from '@iconify/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ChainIcon from '../utility/ChainIcon';
 import SerchBox from '../utility/SearchBox';
 import { useCurrentChainParams } from '../../hooks/useCurrentChainParams';
+import { useChainState } from '../../states/chain/reducer';
+import { getPublicClient } from '../../../shared/utils/client';
 
 interface Props extends SimpleComponent {}
 
@@ -53,35 +55,63 @@ function DashboardHeader(props: Props) {
   const location = useLocation();
   const navigate = useNavigate();
   const { layer, chainId } = useCurrentChainParams();
+  const [blockNumber, setBlockNumber] = useState('');
 
   const onClickMenu = (title: string) => {
     navigate(`/dashboard/${title.toLowerCase()}/${layer}/${chainId}`);
   };
+
+  const chainState = useChainState();
+  const chain = chainState.chainConfing[chainId];
+
+  const getBlocknumber = async () => {
+    const publicClient = getPublicClient(chain);
+    if (!publicClient) return;
+    const currentBlock = await publicClient.getBlockNumber();
+    setBlockNumber(currentBlock.toString());
+  };
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchAccounts = async () => {
+      while (isMounted) {
+        await getBlocknumber();
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+      }
+    };
+
+    fetchAccounts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [chainId, layer]);
 
   return (
     <DashboardHeaderWrapper className="w-full bg-white py-5 px-6 border-b-1 border-gray-200">
       <div className="flex flex-wrap w-ful gap-12">
         <div>
           <p className="text-gray-600 mb-1 text-sm">Current Block</p>
-          <b className="text-black">123456</b>
+          <b className="text-black">{blockNumber}</b>
         </div>
 
         <div>
           <p className="text-gray-600 mb-1 text-sm">Hardfork</p>
           <div className="flex items-center gap-2">
-            <ChainIcon chain={'base'} />
-            <b className="text-black">123456</b>
+            {chain && <ChainIcon chain={chain.name as any} />}
+            <b className="text-black">{chain?.name}</b>
           </div>
         </div>
 
         <div>
           <p className="text-gray-600 mb-1 text-sm">Network</p>
-          <b className="text-black">123456</b>
+          <b className="text-black">{chain?.id}</b>
         </div>
 
         <div>
           <p className="text-gray-600 mb-1 text-sm">RPC Server</p>
-          <b className="text-black">Http://127.0.0.1:33333</b>
+          <b className="text-black">{chain ? chain.rpcUrls.default.http : ""}</b>
         </div>
         <div className="ml-auto">
           <SerchBox
