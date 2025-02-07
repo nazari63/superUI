@@ -5,10 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Input from '../components/utility/Input';
 import ChainIcon from '../components/utility/ChainIcon';
-import {
-  AvailableForkChain,
-  AvailableForkChainType,
-} from '../../shared/constant/chain';
+import { AvailableForkChain } from '../../shared/constant/chain';
+import { useAppDispatch } from '../states/hooks';
+import { ChainSlide } from '../states/chain/reducer';
 
 interface Props extends SimpleComponent {}
 
@@ -22,13 +21,11 @@ const ProjectCreateWrapper = styled.div`
 function ProjectCreate(props: Props) {
   const [name, setName] = useState('');
   const [type, setType] = useState<'quick' | 'fork'>('quick');
-  const [selectForkChain, setSelectForkChain] = useState<
-    AvailableForkChainType[]
-  >([]);
-
+  const [selectForkChain, setSelectForkChain] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const selectForkChainClick = (chain: AvailableForkChainType) => {
+  const selectForkChainClick = (chain: string) => {
     console.log('selectForkChainClick', chain);
     if (selectForkChain.includes(chain)) {
       setSelectForkChain(selectForkChain.filter((c) => c !== chain));
@@ -47,7 +44,16 @@ function ProjectCreate(props: Props) {
   };
 
   const submit = () => {
-    navigate('/loading');
+    if (name === '') return;
+    if (type === 'quick') {
+      dispatch(ChainSlide.actions.runQuickMode({ name }));
+      navigate('/loading');
+    } else {
+      dispatch(
+        ChainSlide.actions.runForkMode({ name, l2: selectForkChain as any }),
+      );
+      navigate('/loading');
+    }
   };
   return (
     <ProjectCreateWrapper className="w-full flex flex-col gap-3">

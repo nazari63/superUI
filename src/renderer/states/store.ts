@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 // import ModalReducer from './modal/reducer';
-import LayoutReducer from './layout/reducer';
-import { RefreshSlide } from './refresh/reducer';
+// import LayoutReducer from './layout/reducer';
+// import { RefreshSlide } from './refresh/reducer';
+import { ChainSlide } from './chain/reducer';
 
 export const store = configureStore({
   reducer: {
     // modal: ModalReducer,
-    layout: LayoutReducer,
-    refresh: RefreshSlide.reducer,
+    // layout: LayoutReducer,
+    // refresh: RefreshSlide.reducer,
+    chain: ChainSlide.reducer,
   },
 });
 

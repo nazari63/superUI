@@ -25,6 +25,9 @@ const IconsDict = {
   orderly: OrderlyIMG,
   race: RaceIMG,
   tbn: TBNIMG,
+  OPChainA: OPIMG,
+  OPChainB: OPIMG,
+  mainnet: ETHIMG,
 };
 
 export type ChainListIcon = keyof typeof IconsDict;
