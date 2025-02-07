@@ -25,7 +25,6 @@ function DashboardAccountRoute(props: Props) {
     // Call get-accounts from main process
     const chain = chainState.chainConfing[chainId];
     const accounts = await window.electron.accounts.getAccounts(chain);
-    console.log(accounts);
     setAccounts(accounts);
   };
 
