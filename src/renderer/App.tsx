@@ -21,10 +21,11 @@ export default function App() {
             <Route path="/" element={<ProjectRoute />} />
             <Route path="/create" element={<ProjectCreate />} />
             <Route path="/loading" element={<ProjectLoading />} />
-            <Route path="/dashboard/main" element={<DashboardMain />} />
+
+            {/* dashboard */}
             <Route path="/dashboard/main" element={<DashboardMain />} />
             <Route
-              path="/dashboard/account"
+              path="/dashboard/account/:layer/:chainId"
               element={<DashboardAccountRoute />}
             />
             <Route

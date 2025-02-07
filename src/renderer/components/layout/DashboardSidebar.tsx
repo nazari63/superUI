@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import LOGO_IMG from '../../../../assets/img/logo.svg';
 import { Icon } from '@iconify/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ChainIcon from '../utility/ChainIcon';
 import { useState } from 'react';
 import { useChainState } from '../../states/chain/reducer';
+import { useCurrentChainParams } from '../../hooks/useCurrentChainParams';
 
 interface Props extends SimpleComponent {}
 
@@ -17,14 +18,13 @@ const DashboardSidebarWrapper = styled.div`
 `;
 
 function DashboardSidebar(props: Props) {
-  const [active1, setActive1] = useState(1);
-  const [active2, setActive2] = useState(1);
-
   const chainState = useChainState();
 
   const chainConfig = chainState.chainConfing;
   const l1ChainList = chainState.l1.map((id) => chainConfig[id]);
   const l2ChainList = chainState.l2.map((id) => chainConfig[id]);
+  const { layer, chainId } = useCurrentChainParams();
+  const navigate = useNavigate();
 
   return (
     <DashboardSidebarWrapper className="h-full w-[16rem] flex-none bg-gray-50 border-1 border-gray-200 flex flex-col rounded-xl relative p-5">
@@ -42,11 +42,16 @@ function DashboardSidebar(props: Props) {
       <div className="my-3">
         <div className="flex items-center gap-2 bg-white border-1 border-gray-200 rounded-xl p-4 shadow">
           <div className="bg-radiant w-8 h-8 animate-trans rounded-full p-1 flex items-center justify-center">
-            <Icon icon="icon-park-outline:blockchain" className="text-xl text-white" />
+            <Icon
+              icon="icon-park-outline:blockchain"
+              className="text-xl text-white"
+            />
           </div>
           <div>
             <p className="text-sm font-semibold text-gray-600">Project</p>
-            <p className="text-sm font-semibold text-black">{chainState?.name}</p>
+            <p className="text-sm font-semibold text-black">
+              {chainState?.name}
+            </p>
           </div>
         </div>
       </div>
@@ -57,9 +62,10 @@ function DashboardSidebar(props: Props) {
         <div className="flex flex-col gap-2">
           {l2ChainList.map((item) => (
             <div
+              onClick={() => navigate(`/dashboard/account/1/${item?.id}`)}
               key={item?.id}
               className={`flex items-center gap-2 rounded-xl px-3 py-2 cursor-pointer item-sidebar
-                ${active1 === item?.id ? 'bg-brand-700 text-white' : 'bg-white text-gray-700'}`}
+                ${chainId === item?.id ? 'bg-brand-700 text-white' : 'bg-white text-gray-700'}`}
             >
               <ChainIcon chain={item?.name as any} />
               <p className="text-base font-semibold">{item?.name}</p>
@@ -74,9 +80,10 @@ function DashboardSidebar(props: Props) {
         <div className="flex flex-col gap-2">
           {l1ChainList.map((item) => (
             <div
+              onClick={() => navigate(`/dashboard/account/2/${item?.id}`)}
               key={item?.id}
               className={`flex items-center gap-2 rounded-xl px-3 py-2 cursor-pointer item-sidebar
-                ${active2 === item?.id ? 'bg-brand-700 text-white' : 'bg-white text-gray-700'}`}
+                ${chainId === item?.id ? 'bg-brand-700 text-white' : 'bg-white text-gray-700'}`}
             >
               <ChainIcon chain={item?.name as any} />
               <p className="text-base font-semibold">{item?.name}</p>

@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ChainIcon from '../utility/ChainIcon';
 import SerchBox from '../utility/SearchBox';
+import { useCurrentChainParams } from '../../hooks/useCurrentChainParams';
 
 interface Props extends SimpleComponent {}
 
@@ -16,7 +17,7 @@ const HeaderMenuList = [
     link: '/dashboard/main',
   },
   {
-    title: 'Accounts',
+    title: 'account',
     icon: 'flowbite:wallet-solid',
     link: '/dashboard/account',
   },
@@ -48,11 +49,14 @@ const HeaderMenuList = [
 ];
 
 function DashboardHeader(props: Props) {
-  const [select, setSelectMenu] = useState('Dashboard');
   const [search, setSearch] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
+  const { layer, chainId } = useCurrentChainParams();
 
-  console.log(location.pathname);
+  const onClickMenu = (title: string) => {
+    navigate(`/dashboard/${title.toLowerCase()}/${layer}/${chainId}`);
+  };
 
   return (
     <DashboardHeaderWrapper className="w-full bg-white py-5 px-6 border-b-1 border-gray-200">
@@ -92,8 +96,8 @@ function DashboardHeader(props: Props) {
           <Link to={menu.link} key={`link-menu-head-${menu.title}`}>
             <div
               key={menu.title}
-              className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded transition-all ${select !== menu.title ? 'text-gray-700 bg-white' : 'text-brand-500 bg-brand-25'}`}
-              onClick={() => setSelectMenu(menu.title)}
+              className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded transition-all ${location.pathname.includes(menu.title) ? 'text-brand-500 bg-brand-25' : 'text-gray-700 bg-white'}`}
+              onClick={() => onClickMenu(menu.title)}
             >
               <Icon icon={menu.icon} />
               <p className="text-base font-semibold">{menu.title}</p>

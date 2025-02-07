@@ -1,6 +1,7 @@
 // Disable no-unused-vars, broken for spread args
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import { getAccountsResponse } from './services/accountService';
 
 export type Channels = 'ipc-example' | 'send-message';
 
@@ -23,7 +24,7 @@ const electronHandler = {
     },
   },
   accounts: {
-    getAccounts: () => ipcRenderer.invoke('get-accounts'),
+    getAccounts: (chain: any) => ipcRenderer.invoke('get-accounts', chain) as Promise<getAccountsResponse>,
     // updateAccount: (id: string, name: string) => ipcRenderer.invoke('update-account', id, name),
   },
 };

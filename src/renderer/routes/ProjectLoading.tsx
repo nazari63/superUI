@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import LoadingDots from '../components/utility/LoadingDots';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useChainState } from '../states/chain/reducer';
 
 interface Props extends SimpleComponent {}
 
@@ -26,9 +27,11 @@ const ProjectLoadingWrapper = styled.div`
 function ProjectLoading(props: Props) {
   const navigate = useNavigate();
 
+  const chainState = useChainState();
+
   useEffect(() => {
     setTimeout(() => {
-      navigate('/dashboard/account');
+      navigate(`/dashboard/account/1/${chainState.l1[0]}`);
     }, 5000);
   }, []);
   return (

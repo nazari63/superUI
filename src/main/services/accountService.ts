@@ -1,6 +1,12 @@
 import { ipcMain } from 'electron';
 import { AccountList } from '../../shared/constant/account';
-import { client } from '../../shared/utils/client';
+import { getPublicClient } from '../../shared/utils/client';
+
+export type getAccountsResponse = {
+  privateKey: string;
+  publicKey: `0x${string}`;
+  balance: bigint;
+}[];
 
 export class AccountService {
   constructor() {
@@ -18,11 +24,12 @@ export class AccountService {
     //   },
     // );
 
-    ipcMain.handle('get-accounts', async () => {
+    ipcMain.handle('get-accounts', async (_, chain: any) => {
       try {
+        const client = getPublicClient(chain);
         const balances = await Promise.all(
           AccountList.map(async (account) => {
-            const balance = await client.local.eth.getBalance({
+            const balance = await client.getBalance({
               address: account.publicKey,
             });
 
