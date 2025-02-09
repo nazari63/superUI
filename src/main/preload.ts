@@ -24,8 +24,18 @@ const electronHandler = {
     },
   },
   accounts: {
-    getAccounts: (chain: any) => ipcRenderer.invoke('get-accounts', chain) as Promise<getAccountsResponse>,
+    getAccounts: (chain: any) =>
+      ipcRenderer.invoke('get-accounts', chain) as Promise<getAccountsResponse>,
     // updateAccount: (id: string, name: string) => ipcRenderer.invoke('update-account', id, name),
+  },
+  foudry: {
+    getFoudry: () => ipcRenderer.invoke('check-foundry') as Promise<boolean>,
+  },
+  supersim: {
+    startSupersim: () => ipcRenderer.invoke('start-supersim') as Promise<void>,
+    stopSupersim: () => ipcRenderer.invoke('stop-supersim') as Promise<void>,
+    supersimStatus: () =>
+      ipcRenderer.invoke('supersim-status') as Promise<boolean>,
   },
 };
 

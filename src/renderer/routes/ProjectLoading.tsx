@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import LoadingDots from '../components/utility/LoadingDots';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useChainState } from '../states/chain/reducer';
+import { ipcRenderer } from 'electron';
 
 interface Props extends SimpleComponent {}
 
@@ -26,14 +27,30 @@ const ProjectLoadingWrapper = styled.div`
 
 function ProjectLoading(props: Props) {
   const navigate = useNavigate();
+  const [logs, setLogs] = useState<string[]>([]);
 
   const chainState = useChainState();
 
-  useEffect(() => {
-    setTimeout(() => {
-      navigate(`/dashboard/account/1/${chainState.l1[0]}`);
-    }, 5000);
-  }, []);
+  console.log(logs);
+
+  // useEffect(() => {
+  //   // setTimeout(() => {
+  //   //   navigate(`/dashboard/account/1/${chainState.l1[0]}`);
+  //   // }, 5000);
+
+  //   setTimeout(() => {
+  //     window.electron.supersim.startSupersim();
+  //   }, 1000);
+
+  //   ipcRenderer.on('supersim-log', (_event, message) => {
+  //     setLogs((prevLogs) => [...prevLogs, message]);
+  //   });
+
+  //   return () => {
+  //     ipcRenderer.removeAllListeners('supersim-log');
+  //   };
+  // }, []);
+
   return (
     <ProjectLoadingWrapper className="w-full flex flex-col gap-3 items-center justify-center">
       <div className="flex flex-col gap-3 items-center justify-center">
