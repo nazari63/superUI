@@ -3,19 +3,22 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { getAccountsResponse } from './services/accountService';
 
-export type Channels = 'ipc-example' | 'send-message';
+export type Channels = 'ipc-example' | 'send-message' | 'supersim-log';
 
 const electronHandler = {
   ipcRenderer: {
     sendMessage(channel: Channels, ...args: unknown[]) {
       ipcRenderer.send(channel, ...args);
     },
+    // send: (channel: Channels, ...args: unknown[]) =>
+    //   ipcRenderer.send(channel, ...args),
     on(channel: Channels, func: (...args: unknown[]) => void) {
       const subscription = (_event: IpcRendererEvent, ...args: unknown[]) =>
         func(...args);
       ipcRenderer.on(channel, subscription);
 
       return () => {
+        console.log('Removing listener', channel);
         ipcRenderer.removeListener(channel, subscription);
       };
     },

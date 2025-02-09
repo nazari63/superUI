@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useChainState } from '../states/chain/reducer';
 import { ipcRenderer } from 'electron';
+import { SupersimLog } from '../../main/services/supersimService';
 
 interface Props extends SimpleComponent {}
 
@@ -28,28 +29,38 @@ const ProjectLoadingWrapper = styled.div`
 function ProjectLoading(props: Props) {
   const navigate = useNavigate();
   const [logs, setLogs] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [running, setRunning] = useState(false);
+  const [error, setError] = useState(false);
 
   const chainState = useChainState();
 
-  console.log(logs);
+  const startSupersim = async () => {
+    await window.electron.supersim.startSupersim();
+  };
 
-  // useEffect(() => {
-  //   // setTimeout(() => {
-  //   //   navigate(`/dashboard/account/1/${chainState.l1[0]}`);
-  //   // }, 5000);
+  useEffect(() => {
+    startSupersim();
+    window.electron.ipcRenderer.on('supersim-log', (message) => {
+      const {
+        message: messageLog,
+        loading,
+        running,
+        error,
+      } = message as SupersimLog;
+      setLogs((prevLogs: any) => [...prevLogs, messageLog]);
+      setLoading(loading);
+      setRunning(running);
+      setError(error);
+      console.log('message', message);
+    });
+  }, []);
 
-  //   setTimeout(() => {
-  //     window.electron.supersim.startSupersim();
-  //   }, 1000);
-
-  //   ipcRenderer.on('supersim-log', (_event, message) => {
-  //     setLogs((prevLogs) => [...prevLogs, message]);
-  //   });
-
-  //   return () => {
-  //     ipcRenderer.removeAllListeners('supersim-log');
-  //   };
-  // }, []);
+  useEffect(() => {
+    if (running) {
+      navigate(`/dashboard/account/1/${chainState.l1[0]}`);
+    }
+  }, [running]);
 
   return (
     <ProjectLoadingWrapper className="w-full flex flex-col gap-3 items-center justify-center">

@@ -21,6 +21,10 @@ const configuration: webpack.Configuration = {
 
   mode: 'development',
 
+  // resolve: {
+  //   fallback: { path: false },
+  // },
+
   target: 'electron-main',
 
   entry: {
