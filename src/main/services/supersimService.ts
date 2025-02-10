@@ -19,6 +19,12 @@ export type SupersimLog = {
   error: boolean;
 };
 
+export type SupersimStartArgs = {
+  mode?: 'quick' | 'fork';
+  name?: string;
+  l2?: string[];
+};
+
 // Determine the correct binary for the OS
 function getDownloadUrl(): { url: string; filename: string } {
   const platform = process.platform;
@@ -111,7 +117,7 @@ export class SupersimService {
   }
 
   registerEvents() {
-    ipcMain.handle('start-supersim', async (event) => {
+    ipcMain.handle('start-supersim', async (_, payload: SupersimStartArgs) => {
       if (supersimProcess) {
         this.window.webContents.send('supersim-log', {
           message: 'Supersim is already running',
@@ -129,9 +135,20 @@ export class SupersimService {
           process.platform === 'win32' ? 'supersim.exe' : 'supersim',
         );
 
-        // console.log('binaryPath', binaryPath);
+        console.log('payload', payload);
 
-        supersimProcess = spawn(`"${binaryPath}"`, [], {
+        let args: any[] = [];
+        if (payload.mode === 'fork') {
+          // --chains=op,base,zora --interop.enabled
+          const chainArgs = payload.l2
+            ? `--chains=${payload.l2.join(',')}`
+            : '';
+          args = ['fork', chainArgs, '--interop.enabled'];
+        }
+
+        console.log('Starting supersim with args:', args);
+
+        supersimProcess = spawn(`"${binaryPath}"`, args, {
           shell: true,
         });
 

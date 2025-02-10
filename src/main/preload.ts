@@ -2,6 +2,7 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { getAccountsResponse } from './services/accountService';
+import { SupersimStartArgs } from './services/supersimService';
 
 export type Channels = 'ipc-example' | 'send-message' | 'supersim-log';
 
@@ -35,7 +36,8 @@ const electronHandler = {
     getFoudry: () => ipcRenderer.invoke('check-foundry') as Promise<boolean>,
   },
   supersim: {
-    startSupersim: () => ipcRenderer.invoke('start-supersim') as Promise<void>,
+    startSupersim: (payload: SupersimStartArgs) =>
+      ipcRenderer.invoke('start-supersim', payload) as Promise<void>,
     stopSupersim: () => ipcRenderer.invoke('stop-supersim') as Promise<void>,
     supersimStatus: () =>
       ipcRenderer.invoke('supersim-status') as Promise<boolean>,

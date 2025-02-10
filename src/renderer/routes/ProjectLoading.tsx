@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useChainState } from '../states/chain/reducer';
 import { ipcRenderer } from 'electron';
 import { SupersimLog } from '../../main/services/supersimService';
+import { IDMapchain } from '../../shared/constant/chain';
 
 interface Props extends SimpleComponent {}
 
@@ -35,8 +36,14 @@ function ProjectLoading(props: Props) {
 
   const chainState = useChainState();
 
+  console.log(logs);
+
   const startSupersim = async () => {
-    await window.electron.supersim.startSupersim();
+    await window.electron.supersim.startSupersim({
+      mode: chainState.mode,
+      name: chainState.name,
+      l2: chainState.l2.map((chain) => IDMapchain[chain]),
+    });
   };
 
   useEffect(() => {
@@ -52,7 +59,6 @@ function ProjectLoading(props: Props) {
       setLoading(loading);
       setRunning(running);
       setError(error);
-      console.log('message', message);
     });
   }, []);
 

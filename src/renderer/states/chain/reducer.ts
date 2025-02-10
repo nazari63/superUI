@@ -16,6 +16,9 @@ interface ChainState {
   chainIndex: {
     [key in typeChainID]?: number;
   };
+  chainLogsPath:{
+    [key in typeChainID]?: string;
+  }
   chainConfing: {
     [key in typeChainID]?: {
       name: string;
@@ -42,6 +45,7 @@ const initialState: ChainState = {
   l2: [],
   chainConfing: {},
   chainIndex: {},
+  chainLogsPath: {},
 };
 
 interface forkModePayloadInterface {
