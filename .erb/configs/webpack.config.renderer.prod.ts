@@ -60,6 +60,7 @@ const configuration: webpack.Configuration = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'sass-loader',
+          'postcss-loader',
           // {
           //   loader: 'postcss-loader',
           //   options: {

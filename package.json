@@ -169,7 +169,7 @@
     "sass-loader": "^16.0.4",
     "style-loader": "^3.3.3",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss": "^4.0.0",
+    "tailwindcss": "^4.0.6",
     "terser-webpack-plugin": "^5.3.9",
     "ts-jest": "^29.1.1",
     "ts-loader": "^9.4.4",
@@ -187,8 +187,8 @@
     "styled-components": "^5"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "SuperUI",
+    "appId": "org.erb.SuperUI",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
