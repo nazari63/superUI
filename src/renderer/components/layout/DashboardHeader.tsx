@@ -89,7 +89,7 @@ function DashboardHeader(props: Props) {
   }, [chainId, layer]);
 
   return (
-    <DashboardHeaderWrapper className="w-full bg-white py-5 px-6 border-b-1 border-gray-200">
+    <DashboardHeaderWrapper className="w-full bg-white py-2 px-6 border-b-1 border-gray-200">
       <div className="flex flex-wrap w-ful gap-12">
         <div>
           <p className="text-gray-600 mb-1 text-sm">Current Block</p>

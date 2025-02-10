@@ -19,3 +19,12 @@
   background-image: url('/assets/img/Gradient.png');
   background-size: contain;
 }
+
+
+/* resposive */
+@media (max-width: 1100px) {
+  html,
+  body {
+    font-size: 90%;
+  }
+}
