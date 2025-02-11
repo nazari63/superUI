@@ -62,6 +62,8 @@ const createWindow = async () => {
     await installREDUX();
   }
 
+  // mainWindow?.webContents.openDevTools();
+
   // console.log(session.defaultSession.getAllExtensions());
 
   const RESOURCES_PATH = app.isPackaged
@@ -93,6 +95,7 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+    mainWindow.webContents.openDevTools();
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {

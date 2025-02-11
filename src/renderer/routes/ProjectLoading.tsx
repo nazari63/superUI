@@ -79,9 +79,10 @@ function ProjectLoading(props: Props) {
             Just a moment <LoadingDots />
           </div>
           <p className="text-gray-600 text-base">We are building for you </p>
-          <span className="text-sm text-brand-500">
-            Creating... Opstack chain
-          </span>
+          <div className="max-w-full w-full break-all text-brand-400 text-center">
+            {/* Creating... Opstack chain */}
+            {logs[logs.length - 1] || ''}
+          </div>
         </div>
       </div>
     </ProjectLoadingWrapper>

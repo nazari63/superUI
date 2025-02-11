@@ -13,7 +13,7 @@ export class IpcHandler {
   constructor(window: BrowserWindow) {
     this.timeService = new TimeService(window);
     this.accountService = new AccountService();
-    this.foundryService = new FoundryService();
+    this.foundryService = new FoundryService(window);
     this.supersimService = new SupersimService(window);
   }
 }

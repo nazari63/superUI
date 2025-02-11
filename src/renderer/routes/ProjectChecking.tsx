@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import LoadingDots from '../components/utility/LoadingDots';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { anvilLog } from '../../main/services/foundry';
 
 interface Props extends SimpleComponent {}
 
@@ -25,58 +26,55 @@ const ProjectCheckingWrapper = styled.div`
 
 function ProjectChecking(props: Props) {
   const navigate = useNavigate();
+  const [logs, setLogs] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [foundry, setFoundry] = useState(false);
+  const [running, setRunning] = useState(false);
+  const [error, setError] = useState(false);
 
+  console.log(logs);
 
-  const checkFoundry = async () => {
-    setLoading(true);
-    const res = await window.electron.foudry.getFoudry();
-    setFoundry(res);
-    if (res) {
-      navigate(`/project`);
-    }
-    setLoading(false);
+  const startCheckAnvil = async () => {
+    await window.electron.foudry.check();
   };
 
   useEffect(() => {
-    checkFoundry();
+    startCheckAnvil();
+    window.electron.ipcRenderer.on('anvil-log', (message) => {
+      const {
+        message: messageLog,
+        loading,
+        running,
+        error,
+      } = message as anvilLog;
+      setLogs((prevLogs: any) => [...prevLogs, messageLog]);
+      setLoading(loading);
+      setRunning(running);
+      setError(error);
+    });
   }, []);
+
+  useEffect(() => {
+    if (running) {
+      navigate(`/project`);
+    }
+  }, [running]);
   return (
     <ProjectCheckingWrapper className="w-full flex flex-col gap-3 items-center justify-center">
-      {loading && (
-        <div className="flex flex-col gap-3 items-center justify-center">
-          <div className="rounded-full w-30 h-30 relative overflow-hidden">
-            <div className="bg-radiant w-full h-full animate-trans"></div>
-          </div>
-          <div className="flex flex-col items-center mt-4 gap-2">
-            <div className="text-3xl font-semibold text-black flex gap-2">
-              Just a moment <LoadingDots />
-            </div>
-            <p className="text-gray-600 text-base">Prerequisites: foundry</p>
-            <span className="text-sm text-brand-500">Checking foundry</span>
-          </div>
+      <div className="flex flex-col gap-3 items-center justify-center">
+        <div className="rounded-full w-30 h-30 relative overflow-hidden">
+          <div className="bg-radiant w-full h-full animate-trans"></div>
         </div>
-      )}
-      {!loading && !foundry && (
-        <div>
+        <div className="flex flex-col items-center mt-4 gap-2">
           <div className="text-3xl font-semibold text-black flex gap-2">
-            Please install foundry
+            Just a moment <LoadingDots />
           </div>
-          <div>
-            Follow the guide here to install the
-            <a
-              className='text-brand-500'
-              href="https://book.getfoundry.sh/getting-started/installation"
-              target="_blank"
-              rel="noreferrer"
-            >
-              {' '}foundry{' '}
-            </a>
-            toolchain.
+          <span className="text-sm text-gray-500">Checking foundry</span>
+          <div className="max-w-full w-full break-all text-brand-400 text-center">
+            {/* Creating... Opstack chain */}
+            {logs[logs.length - 1] || ''}
           </div>
         </div>
-      )}
+      </div>
     </ProjectCheckingWrapper>
   );
 }

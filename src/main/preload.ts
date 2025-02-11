@@ -4,7 +4,7 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { getAccountsResponse } from './services/accountService';
 import { SupersimStartArgs } from './services/supersimService';
 
-export type Channels = 'ipc-example' | 'send-message' | 'supersim-log';
+export type Channels = 'ipc-example' | 'send-message' | 'supersim-log' | 'anvil-log';
 
 const electronHandler = {
   ipcRenderer: {
@@ -33,7 +33,13 @@ const electronHandler = {
     // updateAccount: (id: string, name: string) => ipcRenderer.invoke('update-account', id, name),
   },
   foudry: {
-    getFoudry: () => ipcRenderer.invoke('check-foundry') as Promise<boolean>,
+    check: () =>
+      ipcRenderer.invoke('check-foundry') as Promise<{
+        isSuccess: boolean;
+        error: string;
+        msg: string;
+        stderr: string;
+      }>,
   },
   supersim: {
     startSupersim: (payload: SupersimStartArgs) =>

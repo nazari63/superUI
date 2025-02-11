@@ -5,6 +5,7 @@ import https from 'https';
 import { execSync } from 'child_process';
 import extract from 'extract-zip';
 import path from 'path';
+import { foundryBinaryPath } from './foundry';
 
 const SUPERSIM_VERSION = '0.1.0-alpha.33'; // Update as needed
 const DOWNLOAD_BASE_URL = `https://github.com/ethereum-optimism/supersim/releases/download/${SUPERSIM_VERSION}`;
@@ -81,11 +82,6 @@ async function downloadSupersim(window: BrowserWindow) {
               execSync(`tar -xzf "${outputPath}" -C "${supersimPath}"`);
             }
 
-            // // Make executable (for Mac/Linux)
-            if (process.platform !== 'win32') {
-              execSync(`chmod +x "${path.join(supersimPath, 'supersim')}"`);
-            }
-
             window.webContents.send('supersim-log', {
               message: 'Supersim downloaded and ready!',
               loading: true,
@@ -118,6 +114,40 @@ export class SupersimService {
 
   registerEvents() {
     ipcMain.handle('start-supersim', async (_, payload: SupersimStartArgs) => {
+      // check version foundry with forge --version (async await)
+
+      const checkFoundry = async () => {
+        return new Promise((resolve) => {
+          exec('forge --version', (error, stdout, stderr) => {
+            console.log('stdout', stdout);
+            console.log('stderr', stderr);
+            console.log('error', error);
+            if (error) {
+              resolve({
+                isSuccess: false,
+                error: error.message,
+                msg: undefined,
+              });
+            } else {
+              resolve({
+                isSuccess: true,
+                error: undefined,
+                msg: stdout,
+              });
+            }
+          });
+        });
+      };
+
+      const res = (await checkFoundry()) as any;
+
+      this.window.webContents.send('supersim-log', {
+        message: res.msg,
+        loading: false,
+        running: false,
+        error: res.error ? true : false,
+      });
+
       if (supersimProcess) {
         this.window.webContents.send('supersim-log', {
           message: 'Supersim is already running',
@@ -137,6 +167,18 @@ export class SupersimService {
 
         console.log('payload', payload);
 
+        // // Make executable (for Mac/Linux)
+        if (process.platform !== 'win32') {
+          // execSync(`chmod +x "${binaryPath}"`);
+          fs.chmodSync(`${binaryPath}`, '755');
+          this.window.webContents.send('supersim-log', {
+            message: `Supersim binary made executable "${binaryPath}"`,
+            loading: false,
+            running: false,
+            error: false,
+          });
+        }
+
         let args: any[] = [];
         if (payload.mode === 'fork') {
           // --chains=op,base,zora --interop.enabled
@@ -146,12 +188,11 @@ export class SupersimService {
           args = ['fork', chainArgs, '--interop.enabled'];
         }
 
-        console.log('Starting supersim with args:', args);
-
-        supersimProcess = spawn(`"${binaryPath}"`, args, {
-          shell: true,
-        });
-
+        const env = {
+          ...process.env,
+          PATH: `${foundryBinaryPath.dir}:${process.env.PATH || ''}`,
+        };
+        supersimProcess = spawn(binaryPath, args, { env, shell: false });
         supersimProcess.stdout.on('data', (data) => {
           const dataString = data.toString();
 
@@ -164,7 +205,7 @@ export class SupersimService {
             });
           } else {
             this.window.webContents.send('supersim-log', {
-              message: dataString,
+              message: `INFO ${dataString}`,
               loading: false,
               running: false,
               error: false,
