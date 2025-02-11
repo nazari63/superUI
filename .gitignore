@@ -21,6 +21,8 @@ node_modules
 release/app/dist
 release/build
 .erb/dll
+t.json
+t2.json
 
 .idea
 npm-debug.log.*
