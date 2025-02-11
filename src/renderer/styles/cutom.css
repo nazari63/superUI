@@ -1,5 +1,5 @@
 @theme {
-  --animate-move: move 1.5s ease-in-out infinite;
+  --animate-move: move 5s ease-in-out infinite;
   @keyframes move {
     0%,
     100% {

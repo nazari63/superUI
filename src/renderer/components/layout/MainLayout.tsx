@@ -15,7 +15,7 @@ function MainLayout(props: Props) {
     <MainLayoutWrapper className="w-full h-full grid grid-cols-2">
       <div className="bg-white w-full h-full relative z-100 p-10 flex flex-col justify-center">
         <div className="bg-white absolute left-6 top-6">
-          <img src={LOGO_IMG} alt="logo" className="h-8" />
+          <img src={LOGO_IMG} alt="logo" className="h-12" />
         </div>
         <div className="">{props.children}</div>
         <p className="bg-white absolute bottom-6 left-6 text-gray-600 text-sm">

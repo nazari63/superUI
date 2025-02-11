@@ -29,7 +29,7 @@ function DashboardSidebar(props: Props) {
   return (
     <DashboardSidebarWrapper className="h-full w-[16rem] flex-none bg-gray-50 border-1 border-gray-200 flex flex-col rounded-xl relative p-5">
       <div className="mb-8">
-        <img src={LOGO_IMG} alt="logo" className="h-8" />
+        <img src={LOGO_IMG} alt="logo" className="h-10" />
       </div>
       <Link to="/">
         <div className="text-brand-700 cursor-pointer flex items-center gap-2 hover:text-brand-100 hovering">
