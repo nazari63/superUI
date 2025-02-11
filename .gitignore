@@ -23,6 +23,7 @@ release/build
 .erb/dll
 t.json
 t2.json
+private
 
 .idea
 npm-debug.log.*
