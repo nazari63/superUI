@@ -50,7 +50,7 @@ function getDownloadUrl(): { url: string; filename: string } {
   }
 }
 
-async function downloadAndSetupAnvil(window: BrowserWindow) {
+async function downloadAndSetupAnvil(window?: BrowserWindow) {
   const { url, filename } = getDownloadUrl();
   console.log('Downloading Anvil:', url);
   const outputPath = path.join(foundryPath, filename);
@@ -93,7 +93,7 @@ async function downloadAndSetupAnvil(window: BrowserWindow) {
               fs.chmodSync(`${foundryBinaryPath.forge}`, '755');
             }
 
-            window.webContents.send('anvil-log', {
+            window?.webContents.send('anvil-log', {
               message: 'Anvil downloaded and ready!',
               loading: true,
               running: false,
@@ -143,7 +143,7 @@ const checkFoundry = async (): Promise<{
 };
 
 export class FoundryService {
-  private window: BrowserWindow;
+  private window?: BrowserWindow;
 
   constructor(window: BrowserWindow) {
     this.registerEvents();
@@ -154,7 +154,7 @@ export class FoundryService {
     ipcMain.handle('check-foundry', async () => {
       const check1 = await checkFoundry();
       if (check1.isSuccess) {
-        this.window.webContents.send('anvil-log', {
+        this.window?.webContents.send('anvil-log', {
           message: check1.msg,
           loading: false,
           running: true,
@@ -166,7 +166,7 @@ export class FoundryService {
       try {
         await downloadAndSetupAnvil(this.window);
       } catch (error: any) {
-        this.window.webContents.send('anvil-log', {
+        this.window?.webContents.send('anvil-log', {
           message: `Anvil download failed ${error.message}`,
           loading: false,
           running: false,
@@ -178,7 +178,7 @@ export class FoundryService {
       const check2 = await checkFoundry();
 
       if (check2.isSuccess) {
-        this.window.webContents.send('anvil-log', {
+        this.window?.webContents.send('anvil-log', {
           message: check2.msg,
           loading: false,
           running: true,
@@ -188,7 +188,7 @@ export class FoundryService {
         return;
       }
 
-      this.window.webContents.send('anvil-log', {
+      this.window?.webContents.send('anvil-log', {
         message: 'Anvil is downloaded but Foundry is not installed',
         loading: false,
         running: false,
