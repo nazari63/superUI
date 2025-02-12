@@ -20,6 +20,21 @@ import os from 'node:os';
 import { IpcHandler } from './services/ipcHandler';
 
 class AppUpdater {
+  private downloadProgressDialog: Electron.MessageBoxReturnValue | null = null;
+
+  private showDownloadProgressDialog() {
+    dialog
+      .showMessageBox({
+        type: 'info',
+        title: 'Downloading Updates',
+        message: 'Downloading updates...',
+        buttons: [],
+      })
+      .then((dialogRef) => {
+        this.downloadProgressDialog = dialogRef;
+      });
+  }
+
   constructor() {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
@@ -36,12 +51,28 @@ class AppUpdater {
         })
         .then((buttonIndex) => {
           if (buttonIndex.response === 0) {
+            this.showDownloadProgressDialog();
             autoUpdater.downloadUpdate();
           }
         });
     });
 
+    autoUpdater.on('download-progress', (progressObj) => {
+      if (this.downloadProgressDialog) {
+        const log_message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`;
+        dialog.showMessageBox({
+          type: 'info',
+          title: 'Downloading Updates',
+          message: log_message,
+          buttons: [],
+        });
+      }
+    });
+
     autoUpdater.on('update-downloaded', () => {
+      if (this.downloadProgressDialog) {
+        this.downloadProgressDialog = null;
+      }
       dialog
         .showMessageBox({
           type: 'info',

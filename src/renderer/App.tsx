@@ -15,6 +15,10 @@ import ProjectChecking from './routes/ProjectChecking';
 import './styles/App.css';
 import 'sweetalert2/dist/sweetalert2.css';
 
+import log from 'electron-log';
+
+console.log('electron-log', log.transports.file.getFile().path);
+
 export default function App() {
   return (
     <ReduxToolkitProvider store={store}>
