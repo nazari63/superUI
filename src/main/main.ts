@@ -19,6 +19,8 @@ import fs from 'fs';
 import os from 'node:os';
 import { IpcHandler } from './services/ipcHandler';
 
+const electronLogsPath = log.transports.file.getFile().path;
+
 class AppUpdater {
   private downloadProgressDialog: Electron.MessageBoxReturnValue | null = null;
 
@@ -57,17 +59,17 @@ class AppUpdater {
         });
     });
 
-    autoUpdater.on('download-progress', (progressObj) => {
-      if (this.downloadProgressDialog) {
-        const log_message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`;
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Downloading Updates',
-          message: log_message,
-          buttons: [],
-        });
-      }
-    });
+    // autoUpdater.on('download-progress', (progressObj) => {
+    //   if (this.downloadProgressDialog) {
+    //     const log_message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}% (${progressObj.transferred}/${progressObj.total})`;
+    //     dialog.showMessageBox({
+    //       type: 'info',
+    //       title: 'Downloading Updates',
+    //       message: log_message,
+    //       buttons: [],
+    //     });
+    //   }
+    // });
 
     autoUpdater.on('update-downloaded', () => {
       if (this.downloadProgressDialog) {
@@ -93,7 +95,7 @@ let mainWindow: BrowserWindow | null = null;
 ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+  event.reply('ipc-example', msgTemplate('log' + electronLogsPath));
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -155,7 +157,7 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
