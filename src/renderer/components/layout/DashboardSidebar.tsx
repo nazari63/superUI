@@ -4,8 +4,9 @@ import { Icon } from '@iconify/react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import ChainIcon from '../utility/ChainIcon';
 import { useState } from 'react';
-import { useChainState } from '../../states/chain/reducer';
+import { ChainSlide, useChainState } from '../../states/chain/reducer';
 import { useCurrentChainParams } from '../../hooks/useCurrentChainParams';
+import { useAppDispatch } from '../../states/hooks';
 
 interface Props extends SimpleComponent {}
 
@@ -25,18 +26,26 @@ function DashboardSidebar(props: Props) {
   const l2ChainList = chainState.l2.map((id) => chainConfig[id]);
   const { layer, chainId } = useCurrentChainParams();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const exitProject = async () => {
+    await window.electron.supersim.stopSupersim();
+    dispatch(ChainSlide.actions.exitMode());
+    navigate('/');
+  };
 
   return (
     <DashboardSidebarWrapper className="h-full w-[16rem] flex-none bg-gray-50 border-1 border-gray-200 flex flex-col rounded-xl relative p-5">
       <div className="mb-8">
         <img src={LOGO_IMG} alt="logo" className="h-10" />
       </div>
-      <Link to="/">
-        <div className="text-brand-700 cursor-pointer flex items-center gap-2 hovering">
-          <Icon icon="grommet-icons:form-previous-link" className="text-2xl" />
-          <p className="text-sm font-semibold">All project</p>
-        </div>
-      </Link>
+      <div
+        onClick={exitProject}
+        className="text-brand-700 cursor-pointer flex items-center gap-2 hovering"
+      >
+        <Icon icon="grommet-icons:form-previous-link" className="text-2xl" />
+        <p className="text-sm font-semibold">Exit project</p>
+      </div>
 
       {/* user */}
       <div className="my-3">

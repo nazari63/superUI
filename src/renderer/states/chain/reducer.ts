@@ -95,6 +95,15 @@ export const ChainSlide = createSlice({
         }, {} as { [key in typeChainID]?: ReturnType<typeof getDefinedChain> }),
       };
     },
+    exitMode(state) {
+      state.mode = undefined;
+      state.name = undefined;
+      state.isLoading = false;
+      state.l1 = [];
+      state.l2 = [];
+      state.chainIndex = {};
+      state.chainConfing = {};
+    },
   },
 });
 

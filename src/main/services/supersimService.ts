@@ -141,7 +141,7 @@ export class SupersimService {
 
       const res = (await checkFoundry()) as any;
 
-      this.window?.webContents.send('supersim-log', {
+      this.window?.webContents?.send('supersim-log', {
         message: res.msg,
         loading: false,
         running: false,
@@ -149,7 +149,7 @@ export class SupersimService {
       });
 
       if (supersimProcess) {
-        this.window?.webContents.send('supersim-log', {
+        this.window?.webContents?.send('supersim-log', {
           message: 'Supersim is already running',
           loading: false,
           running: true,
@@ -171,7 +171,7 @@ export class SupersimService {
         if (process.platform !== 'win32') {
           // execSync(`chmod +x "${binaryPath}"`);
           fs.chmodSync(`${binaryPath}`, '755');
-          this.window?.webContents.send('supersim-log', {
+          this.window?.webContents?.send('supersim-log', {
             message: `Supersim binary made executable "${binaryPath}"`,
             loading: false,
             running: false,
@@ -197,14 +197,14 @@ export class SupersimService {
           const dataString = data.toString();
 
           if (dataString.includes('Available')) {
-            this.window?.webContents.send('supersim-log', {
+            this.window?.webContents?.send('supersim-log', {
               message: dataString,
               loading: false,
               running: true,
               error: false,
             });
           } else {
-            this.window?.webContents.send('supersim-log', {
+            this.window?.webContents?.send('supersim-log', {
               message: `INFO ${dataString}`,
               loading: false,
               running: false,
@@ -214,7 +214,7 @@ export class SupersimService {
         });
 
         supersimProcess.stderr.on('data', (data) => {
-          this.window?.webContents.send('supersim-log', {
+          this.window?.webContents?.send('supersim-log', {
             message: `ERROR: ${data.toString()}`,
             loading: false,
             running: false,
@@ -223,7 +223,7 @@ export class SupersimService {
         });
 
         supersimProcess.on('exit', (code) => {
-          this.window?.webContents.send('supersim-log', {
+          this.window?.webContents?.send('supersim-log', {
             message: `Supersim exited with code ${code}`,
             loading: false,
             running: false,
@@ -232,14 +232,14 @@ export class SupersimService {
           supersimProcess = null;
         });
 
-        this.window?.webContents.send('supersim-log', {
+        this.window?.webContents?.send('supersim-log', {
           message: 'Supersim started',
           loading: true,
           running: false,
           error: false,
         });
       } catch (error) {
-        this.window?.webContents.send('supersim-log', {
+        this.window?.webContents?.send('supersim-log', {
           message: `ERROR: ${error}`,
           loading: false,
           running: false,
@@ -252,14 +252,16 @@ export class SupersimService {
       if (supersimProcess) {
         supersimProcess.kill();
         supersimProcess = null;
-        this.window?.webContents.send('supersim-log', {
+        console.log('stop-supersim: Supersim stopped');
+        this.window?.webContents?.send('supersim-log', {
           message: 'Supersim stopped',
           loading: false,
           running: false,
           error: false,
         });
       } else {
-        this.window?.webContents.send('supersim-log', {
+        console.log('stop-supersim: Supersim is not running');
+        this.window?.webContents?.send('supersim-log', {
           message: 'Supersim is not running',
           loading: false,
           running: false,
