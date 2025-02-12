@@ -4,7 +4,12 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { getAccountsResponse } from './services/accountService';
 import { SupersimStartArgs } from './services/supersimService';
 
-export type Channels = 'ipc-example' | 'send-message' | 'supersim-log' | 'anvil-log';
+export type Channels =
+  | 'ipc-example'
+  | 'send-message'
+  | 'supersim-log'
+  | 'anvil-log'
+  | 'update-downloaded';
 
 const electronHandler = {
   ipcRenderer: {
@@ -47,6 +52,14 @@ const electronHandler = {
     stopSupersim: () => ipcRenderer.invoke('stop-supersim') as Promise<void>,
     supersimStatus: () =>
       ipcRenderer.invoke('supersim-status') as Promise<boolean>,
+  },
+  app: {
+    checkUpdate: () => ipcRenderer.invoke('check-update') as Promise<void>,
+    getCurrentVersion: () =>
+      ipcRenderer.invoke('get-current-version') as Promise<any>,
+    startUpdate: () => ipcRenderer.invoke('start-update') as Promise<void>,
+    updateDownloaded: () =>
+      ipcRenderer.invoke('update-downloaded') as Promise<void>,
   },
 };
 

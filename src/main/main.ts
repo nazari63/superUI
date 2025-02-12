@@ -152,7 +152,7 @@ const createWindow = async () => {
   new AppUpdater();
 
   // Initialize IPC Handler
-  new IpcHandler(mainWindow);
+  new IpcHandler(mainWindow, autoUpdater);
 };
 
 /**
