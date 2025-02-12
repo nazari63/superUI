@@ -26,6 +26,7 @@ class AppUpdater {
     autoUpdater.checkForUpdatesAndNotify();
 
     autoUpdater.on('update-available', () => {
+      console.log('update-available');
       dialog
         .showMessageBox({
           type: 'info',
