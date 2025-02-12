@@ -18,33 +18,33 @@ function MainLayout(props: Props) {
 
   console.log('updateInfo', updateInfo);
 
-  const getVersion = async () => {
-    window.electron.app.getCurrentVersion().then((version) => {
-      setVersion(version.currentVersion);
-      setUpdateInfo(version.updateInfo);
-    });
-  };
+  // const getVersion = async () => {
+  //   window.electron.app.getCurrentVersion().then((version) => {
+  //     setVersion(version.currentVersion);
+  //     setUpdateInfo(version.updateInfo);
+  //   });
+  // };
 
-  const downloadVersion = async () => {
-    await window.electron.app.startUpdate().then(() => {
-      console.log('Update started');
-    });
-  };
+  // const downloadVersion = async () => {
+  //   await window.electron.app.startUpdate().then(() => {
+  //     console.log('Update started');
+  //   });
+  // };
 
-  const quitAndInstall = async () => {
-    await window.electron.app.updateDownloaded().then(() => {
-      console.log('Update installed');
-    });
-  };
+  // const quitAndInstall = async () => {
+  //   await window.electron.app.updateDownloaded().then(() => {
+  //     console.log('Update installed');
+  //   });
+  // };
 
-  useEffect(() => {
-    getVersion();
+  // useEffect(() => {
+  //   getVersion();
 
-    window.electron.ipcRenderer.on('update-downloaded', (val) => {
-      setReady(true);
-      quitAndInstall();
-    });
-  }, []);
+  //   window.electron.ipcRenderer.on('update-downloaded', (val) => {
+  //     setReady(true);
+  //     quitAndInstall();
+  //   });
+  // }, []);
 
   return (
     <MainLayoutWrapper className="w-full h-full grid grid-cols-2">
@@ -52,8 +52,8 @@ function MainLayout(props: Props) {
         <div className="bg-white absolute left-6 top-6">
           <img src={LOGO_IMG} alt="logo" className="h-12" />
         </div>
-        <div className="bg-white absolute right-6 top-6 flex items-center">
-          Version : {version}
+        {/* <div className="bg-white absolute right-6 top-6 flex items-center">
+          VERSION : {version}
 
           {updateInfo && (
             <button
@@ -63,7 +63,7 @@ function MainLayout(props: Props) {
               Update
             </button>
           )}
-        </div>
+        </div> */}
         <div className="">{props.children}</div>
         <p className="bg-white absolute bottom-6 left-6 text-gray-600 text-sm">
           © Nerd3Lab 2025

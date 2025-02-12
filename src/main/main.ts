@@ -50,7 +50,7 @@ class AppUpdater {
           buttons: ['Quit and Install'],
         })
         .then(() => {
-          setImmediate(() => autoUpdater.quitAndInstall(false, true));
+          autoUpdater.quitAndInstall(false, true);
         });
     });
   }
