@@ -13,13 +13,13 @@ function DashboardTransactionsRoute(props: Props) {
     <TransactionsRouteWrapper>
       <div className="mb-5 flex justify-between items-center">
         <div className="inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white shadow-sm my-3">
-          <button className="px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-red-100 rounded-l-lg">
+          <button className="px-4 py-2 text-sm font-semibold text-gray-700 rounded-l-lg">
             VALUE TRANSFER
           </button>
-          <button className="px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-500 focus:outline-none border-l border-gray-300">
+          <button className="px-4 py-2 text-sm font-semibold text-gray-700 focus:z-10 focus:ring-2 focus:ring-blue-500 focus:outline-none border-l border-gray-300">
             Contract Call
           </button>
-          <button className="px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-r-lg border-l border-gray-300">
+          <button className="px-4 py-2 text-sm font-semibold text-gray-700 focus:z-10 focus:ring-2 focus:ring-blue-500 focus:outline-none rounded-r-lg border-l border-gray-300">
             Lorem
           </button>
         </div>

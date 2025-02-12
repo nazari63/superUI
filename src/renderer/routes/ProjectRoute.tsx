@@ -31,13 +31,13 @@ function ProjectRoute(props: Props) {
       <p className="text-gray-600">Recent Projects</p>
       <SerchBox value={search} onChange={handleChange} />
       <div className="flex flex-col gap-2 w-full max-h-[50vh] overflow-scroll">
-        <Projectitem
+        {/* <Projectitem
           name="Nerd3Lab"
           description="deploying blockchain applications."
           l2ChainList={['base', 'eth', 'local', 'mode', 'op', 'zora']}
           l1ChainList={['eth']}
           status={'active'}
-        />
+        /> */}
         {/* <Projectitem
           name='ETH lab'
           description='when eth up'

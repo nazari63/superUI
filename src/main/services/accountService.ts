@@ -2,11 +2,13 @@ import { ipcMain } from 'electron';
 import { AccountList } from '../../shared/constant/account';
 import { getPublicClient } from '../../shared/utils/client';
 
-export type getAccountsResponse = {
+export interface getAccountsInterface {
   privateKey: string;
   publicKey: `0x${string}`;
   balance: bigint;
-}[];
+}
+
+export type getAccountsResponse = getAccountsInterface[];
 
 export class AccountService {
   constructor() {

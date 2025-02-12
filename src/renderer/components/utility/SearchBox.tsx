@@ -22,7 +22,7 @@ function SerchBox(props: Props) {
   }, [props.value]);
 
   return (
-    <SerchBoxWrapper className="flex gap-2 items-center border-1 border-gray-300 rounded-xl p-2 cursor-pointer text-gray-500 hover:border-gray-600 hover:text-gray-600">
+    <SerchBoxWrapper className="flex gap-2 items-center border-1 border-gray-300 rounded-xl p-2 cursor-pointer text-gray-500">
       <label className="">
         <Icon icon={'bx:bx-search'} className="text-xl" />
       </label>

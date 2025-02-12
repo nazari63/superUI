@@ -32,7 +32,7 @@ function DashboardSidebar(props: Props) {
         <img src={LOGO_IMG} alt="logo" className="h-10" />
       </div>
       <Link to="/">
-        <div className="text-brand-700 cursor-pointer flex items-center gap-2 hover:text-brand-100 hovering">
+        <div className="text-brand-700 cursor-pointer flex items-center gap-2 hovering">
           <Icon icon="grommet-icons:form-previous-link" className="text-2xl" />
           <p className="text-sm font-semibold">All project</p>
         </div>

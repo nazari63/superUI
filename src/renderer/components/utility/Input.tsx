@@ -23,7 +23,7 @@ function Input(props: Props) {
   }, [props.value]);
 
   return (
-    <InputWrapper className="flex gap-2 items-center border-1 border-gray-300 rounded-xl p-2 cursor-pointer text-gray-500 hover:border-gray-600 hover:text-gray-600">
+    <InputWrapper className="flex gap-2 items-center border-1 border-gray-300 rounded-xl p-2 cursor-pointer text-gray-500">
       <input
         id="search"
         type="text"

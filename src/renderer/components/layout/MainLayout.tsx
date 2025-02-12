@@ -23,7 +23,7 @@ function MainLayout(props: Props) {
         </p>
         <p className="flex items-center bg-white absolute bottom-6 right-6 text-gray-600 text-sm">
           <Icon icon="akar-icons:email" className="text-brand-500 text-lg mr-2" />
-          help@untitledui.com
+          nerd3lab@gmail.com
         </p>
       </div>
       <div className="w-full flex flex-col justify-end relative items-center">

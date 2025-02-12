@@ -8,9 +8,12 @@ import ProjectCreate from './routes/ProjectCreate';
 import ProjectRoute from './routes/ProjectRoute';
 import DashboardTransactionsRoute from './routes/TransactionsRoute';
 import { store } from './states/store';
-import './styles/App.css';
+
 import ProjectLoading from './routes/ProjectLoading';
 import ProjectChecking from './routes/ProjectChecking';
+
+import './styles/App.css';
+import 'sweetalert2/dist/sweetalert2.css';
 
 export default function App() {
   return (

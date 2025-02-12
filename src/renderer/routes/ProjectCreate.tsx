@@ -58,7 +58,7 @@ function ProjectCreate(props: Props) {
   return (
     <ProjectCreateWrapper className="w-full flex flex-col gap-3">
       <Link to="/">
-        <div className="text-brand-700 cursor-pointer flex items-center gap-2 hover:text-brand-100 hovering">
+        <div className="text-brand-700 cursor-pointer flex items-center gap-2 hovering">
           <Icon icon="grommet-icons:form-previous-link" className="text-2xl" />
           <p className="text-sm font-semibold">Go back</p>
         </div>

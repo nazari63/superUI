@@ -32,7 +32,7 @@ function Layout(props: Props) {
 
   if (route.pathname.includes('dashboard')) {
     return (
-      <LayoutWrapper className="w-full h-full relative">
+      <LayoutWrapper className="w-full h-full relative bg-white">
         <PestisideButtonContainer />
         <DashboardLayout>{props.children}</DashboardLayout>
       </LayoutWrapper>
@@ -40,7 +40,7 @@ function Layout(props: Props) {
   }
 
   return (
-    <LayoutWrapper className="w-full h-full relative">
+    <LayoutWrapper className="w-full h-full relative bg-white">
       <PestisideButtonContainer />
       <MainLayout>{props.children}</MainLayout>
     </LayoutWrapper>

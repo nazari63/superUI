@@ -3,6 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 // import LayoutReducer from './layout/reducer';
 // import { RefreshSlide } from './refresh/reducer';
 import { ChainSlide } from './chain/reducer';
+import { ModalSlide } from './modal/reducer';
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     // layout: LayoutReducer,
     // refresh: RefreshSlide.reducer,
     chain: ChainSlide.reducer,
+    modal: ModalSlide.reducer,
   },
 });
 

@@ -7,8 +7,13 @@ import ChainIcon from '../components/utility/ChainIcon';
 import { useChainState } from '../states/chain/reducer';
 import { useCurrentChainParams } from '../hooks/useCurrentChainParams';
 import { ipcMain } from 'electron';
-import { getAccountsResponse } from '../../main/services/accountService';
+import { getAccountsInterface, getAccountsResponse } from '../../main/services/accountService';
 import { formatEther } from 'viem';
+import CopyText from '../components/utility/CopyText';
+import Modal from '../components/utility/Modal';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../states/modal/reducer';
+import AccountDetailModal from '../components/modal/AccountDetailModal';
 
 interface Props extends SimpleComponent {}
 
@@ -17,7 +22,9 @@ const DashboardAccountRouteWrapper = styled.div``;
 function DashboardAccountRoute(props: Props) {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
   const chainState = useChainState();
+  const [selectedAccount, setSelectedAccount] = useState<getAccountsInterface>();
 
   const { layer, chainId } = useCurrentChainParams();
   const [accounts, setAccounts] = useState<getAccountsResponse>([]);
@@ -49,8 +56,16 @@ function DashboardAccountRoute(props: Props) {
     return formatEther(balance);
   };
 
+  const openAccountKeyModal = (account: getAccountsInterface) => {
+    setSelectedAccount(account);
+    dispatch(openModal('accountKey'));
+  };
+
   return (
     <DashboardAccountRouteWrapper className="p-4">
+      <Modal modalId="accountKey">
+        <AccountDetailModal account={selectedAccount} />
+      </Modal>
       <div className="shadow-sm bg-white p-5 rounded-2xl border-1 border-gray-200">
         <div className="flex justify-between text-gray-700 text-base">
           <p>MNEMONIC</p>
@@ -60,9 +75,9 @@ function DashboardAccountRoute(props: Props) {
           <p className="flex items-center gap-2">
             sustain culture alert awake relax attitude acid local farm butter
             coffee glad
-            <Icon
-              icon="ph:copy-duotone"
-              className="cursor-pointer text-gray-400 text-2xl"
+            <CopyText
+              value="sustain culture alert awake relax attitude acid local farm butter
+            coffee glad"
             />
           </p>
           <p>m44'60'0'0account_index</p>
@@ -74,7 +89,7 @@ function DashboardAccountRoute(props: Props) {
         <table className="w-full mt-4">
           <thead>
             <tr className="border-b-1 border-gray-200">
-              <th className="text-left py-3">Address</th>
+              <th className="text-left py-3">Public key</th>
               <th className="text-left py-3">Balance</th>
               <th className="text-left py-3">TX COUNT</th>
               <th className="text-left py-3">INDEX</th>
@@ -87,16 +102,16 @@ function DashboardAccountRoute(props: Props) {
                 <td className="text-left py-2 flex items-center gap-2">
                   <ChainIcon chain={'account'} />
                   <span className="w-[23rem]">{account.publicKey}</span>
-                  <Icon
-                    icon="ph:copy-duotone"
-                    className="cursor-pointer text-gray-400 text-2xl"
-                  />
+                  <CopyText value={account.publicKey} />
                 </td>
                 <td className="text-left">{formatBalance(account.balance)}</td>
                 <td className="text-left">0</td>
                 <td className="text-left">{index}</td>
                 <td className="text-left">
-                  <div className="flex items-center">
+                  <div
+                    className="flex items-center"
+                    onClick={() => openAccountKeyModal(account)}
+                  >
                     <Icon
                       icon="material-symbols:key"
                       className="cursor-pointer text-brand-300 text-2xl"
