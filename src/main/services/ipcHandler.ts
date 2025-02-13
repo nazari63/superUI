@@ -14,10 +14,10 @@ export class IpcHandler {
   private appService: AppService;
 
   constructor(window: BrowserWindow, appUpdater: AppUpdater) {
-    this.timeService = new TimeService(window);
-    this.accountService = new AccountService();
-    this.foundryService = new FoundryService(window);
-    this.supersimService = new SupersimService(window);
+    this.timeService = new TimeService(window, appUpdater);
+    this.accountService = new AccountService(window, appUpdater);
+    this.foundryService = new FoundryService(window, appUpdater);
+    this.supersimService = new SupersimService(window, appUpdater);
     this.appService = new AppService(window, appUpdater);
   }
 }

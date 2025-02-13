@@ -1,6 +1,8 @@
-import { ipcMain } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { AccountList } from '../../shared/constant/account';
 import { getPublicClient } from '../../shared/utils/client';
+import { ParentService } from './parentService';
+import { AppUpdater } from 'electron-updater';
 
 export interface getAccountsInterface {
   privateKey: string;
@@ -10,22 +12,16 @@ export interface getAccountsInterface {
 
 export type getAccountsResponse = getAccountsInterface[];
 
-export class AccountService {
-  constructor() {
+export class AccountService extends ParentService {
+  constructor(
+    window: BrowserWindow,
+    appUpdater: AppUpdater,
+  ) {
+    super(window, appUpdater);
     this.registerEvents();
   }
 
   registerEvents() {
-    // Receive user data from renderer
-    // ipcMain.handle(
-    //   'save-user',
-    //   async (_, user: { id: string; name: string }) => {
-    //     this.users[user.id] = user.name;
-    //     console.log(`User saved: ${user.id} - ${user.name}`);
-    //     return { success: true, message: 'User saved successfully' };
-    //   },
-    // );
-
     ipcMain.handle('get-accounts', async (_, chain: any) => {
       try {
         const client = getPublicClient(chain);

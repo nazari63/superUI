@@ -5,6 +5,8 @@ import * as https from 'https';
 import { execSync } from 'child_process';
 import extract from 'extract-zip';
 import path from 'path';
+import { ParentService } from './parentService';
+import { AppUpdater } from 'electron-updater';
 
 const FOUNDRY_VERSION = 'nightly-db3d9fc95398450dbed83d4841042c62c155bcfc';
 const DOWNLOAD_BASE_URL = `https://github.com/foundry-rs/foundry/releases/download/${FOUNDRY_VERSION}`;
@@ -55,7 +57,8 @@ async function downloadAndSetupAnvil(window?: BrowserWindow) {
   console.log('Downloading Anvil:', url);
   const outputPath = path.join(foundryPath, filename);
 
-  if (!fs.existsSync(foundryPath)) fs.mkdirSync(foundryPath, { recursive: true });
+  if (!fs.existsSync(foundryPath))
+    fs.mkdirSync(foundryPath, { recursive: true });
 
   return new Promise<void>((resolve, reject) => {
     const file = fs.createWriteStream(outputPath);
@@ -142,58 +145,64 @@ const checkFoundry = async (): Promise<{
   });
 };
 
-export class FoundryService {
-  private window?: BrowserWindow;
-
-  constructor(window: BrowserWindow) {
+export class FoundryService extends ParentService {
+  constructor(window: BrowserWindow, appUpdater: AppUpdater) {
+    super(window, appUpdater);
     this.registerEvents();
-    this.window = window;
   }
 
   registerEvents() {
     ipcMain.handle('check-foundry', async () => {
       const check1 = await checkFoundry();
       if (check1.isSuccess) {
-        this.window?.webContents.send('anvil-log', {
-          message: check1.msg,
-          loading: false,
-          running: true,
-          error: false,
-        });
+        if (this.isActive()) {
+          this.window?.webContents.send('anvil-log', {
+            message: check1.msg,
+            loading: false,
+            running: true,
+            error: false,
+          });
+        }
         return;
       }
 
       try {
-        await downloadAndSetupAnvil(this.window);
+        await downloadAndSetupAnvil(this.window as BrowserWindow);
       } catch (error: any) {
-        this.window?.webContents.send('anvil-log', {
-          message: `Anvil download failed ${error.message}`,
-          loading: false,
-          running: false,
-          error: true,
-        });
+        if (this.isActive()) {
+          this.window?.webContents.send('anvil-log', {
+            message: `Anvil download failed ${error.message}`,
+            loading: false,
+            running: false,
+            error: true,
+          });
+        }
         return;
       }
 
       const check2 = await checkFoundry();
 
       if (check2.isSuccess) {
-        this.window?.webContents.send('anvil-log', {
-          message: check2.msg,
-          loading: false,
-          running: true,
-          error: false,
-        });
+        if (this.isActive()) {
+          this.window?.webContents.send('anvil-log', {
+            message: check2.msg,
+            loading: false,
+            running: true,
+            error: false,
+          });
+        }
 
         return;
       }
 
-      this.window?.webContents.send('anvil-log', {
-        message: 'Anvil is downloaded but Foundry is not installed',
-        loading: false,
-        running: false,
-        error: true,
-      });
+      if (this.isActive()) {
+        this.window?.webContents.send('anvil-log', {
+          message: 'Anvil is downloaded but Foundry is not installed',
+          loading: false,
+          running: false,
+          error: true,
+        });
+      }
     });
   }
 }

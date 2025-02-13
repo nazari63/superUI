@@ -24,7 +24,10 @@
 - 🧑🏻‍💼 Hackers & Experimenters – Play around without limits.
 
 
-## Installation
-- requires anvil to be installed. Follow the guide [here](https://book.getfoundry.sh/getting-started/installation) to install the Foundry toolchain.
+## Testing with us
+- On macOs (Apple chip), install superUI with download link [here](https://github.com/Nerd3Lab/superUI/releases/download/v1.0.10/SuperUI-1.0.10-arm64.dmg)
+- On macOs (Intel chip), install superUI with download link [here](https://github.com/Nerd3Lab/superUI/releases/download/v1.0.10/SuperUI-1.0.10.dmg)
 
+Please run command `xattr -rd com.apple.quarantine /Applications/SuperUI.app` after installation to avoid any security issues.
 
+**We are working on notarizing the app to avoid this step.**

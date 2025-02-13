@@ -1,13 +1,10 @@
 import { BrowserWindow, ipcMain } from 'electron';
 import { AppUpdater } from 'electron-updater';
+import { ParentService } from './parentService';
 
-export class AppService {
-  private window: BrowserWindow | null = null;
-  private appUpdater: AppUpdater;
-
+export class AppService extends ParentService {
   constructor(window: BrowserWindow, appUpdater: AppUpdater) {
-    this.window = window;
-    this.appUpdater = appUpdater;
+    super(window, appUpdater);
     this.registerEvents();
   }
 
@@ -30,7 +27,9 @@ export class AppService {
     });
 
     this.appUpdater.on('update-downloaded', () => {
-      this.window?.webContents.send('update-downloaded', true);
+      if (this.isActive()) {
+        this.window?.webContents.send('update-downloaded', true);
+      }
     });
   }
 }
