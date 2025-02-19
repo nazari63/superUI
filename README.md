@@ -31,3 +31,4 @@
 Please run command `xattr -rd com.apple.quarantine /Applications/SuperUI.app` after installation to avoid any security issues.
 
 **We are working on notarizing the app to avoid this step.**
+This project is a demonstration of blockchain technology and smart contract integration.
